@@ -12,14 +12,21 @@
 
 @class getData;
 
-@interface tankListViewController : PFQueryTableViewController <UITableViewDataSource, UITableViewDelegate, PF_EGORefreshTableHeaderDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, PFSubclassing>
+@interface tankListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 {
     getData *retrieveData;
 }
 
-+ (NSString *)parseClassName;
+//+ (NSString *)parseClassName;
 
-@property (strong, nonatomic) IBOutlet PFQueryTableViewController *tankList;
+
+// GOOD 4/24/14 //
+@property (strong, nonatomic) IBOutlet UITableView *tankList;
+@property (strong, nonatomic) NSArray *array;
+// GOOD 4/24/14 //
+
+
+
 @property (strong, nonatomic) IBOutlet UITableViewCell *tankCell;
 @property (strong, nonatomic) IBOutlet UILabel *tankNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *tankCapLabel;

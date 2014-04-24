@@ -17,83 +17,102 @@
 
 @implementation tankListViewController
 
+
+
 @class getData;
 
-+ (NSString *)parseClassName
+/*+ (NSString *)parseClassName
 {
     return @"SavedTanks";
-}
+}*/
 
 
 - (void)viewDidLoad
 {
-    getData *savedTankStuff = [getData getSavedTanks];
+//    NSArray *savedTankStuff = [getData savedTankArray];
     
-    NSLog(@"FUCK YOU %@: ", savedTankStuff);
+    UIImageView *bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
+    [bannerImage setImage:[UIImage imageNamed:@"tankDummyShot.jpg"]];
+    [bannerImage setContentMode:UIViewContentModeScaleAspectFill];
     
+//    self.tankList = [[UITableView alloc] initWithFrame:CGRectMake(0, 150, 320, 1000) style:UITableViewStylePlain];
+    self.tankList.dataSource = self;
+    self.tankList.delegate = self;
+    self.title = @"My Tanks";
+
+    
+    [self.view addSubview:bannerImage];
+
+    [self.view addSubview:self.tankList];
 
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-- (id)initWithCoder:(NSCoder *)aCoder
-{
-    self = [super initWithCoder:aCoder];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [getData getSavedTanks:^(NSArray *results) {
+        self.array = results;
+        
+        NSLog(@"%@", results);
+        [self.tankList reloadData];
+    }];
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (self) {
-        
-        // The key of the PFObject to display in the label of the default cell style
-        self.textKey = @"text";
-        
-        // Uncomment the following line to specify the key of a PFFile on the PFObject to display in the imageView of the default cell style
-        // self.imageKey = @"image";
-        
-        // Whether the built-in pull-to-refresh is enabled
-        self.pullToRefreshEnabled = YES;
-        
-        // Whether the built-in pagination is enabled
-        self.paginationEnabled = YES;
-        
-        // The number of objects to show per page
-        self.objectsPerPage = 25;
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PFObject *pfObject = self.array[indexPath.row];
+    
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    
+    _tankList = [self.array objectAtIndex:indexPath.row];
+    
+//    [_lastImage setImage:[UIImage imageNamed:@"AussieTorch.jpg"]];
+
+    cell.textLabel.text = [pfObject valueForKey:@"tankName"];
+    cell.detailTextLabel.text = [pfObject valueForKey:@"tankCapacity"];
+    cell.imageView.image = [UIImage imageNamed:@"AussieTorch.jpg"];
+    
+    return cell;
+}
+
+// do the normal table view stuff
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSLog(@"COUNT ROWS IN SECTION: %lu", self.array.count);
+    return self.array.count;
+}
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    //Tank Name
+    //Tank Capacity
+    //Tank Image (maybe!)
+
     return self;
+}
+
+- (IBAction)addNewTank:(id)sender
+{
+        [self performSegueWithIdentifier:@"newTankEntry" sender:self];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing
 
 
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    __block UITableViewCell *cell = [[UITableViewCell alloc] init];
-    
-    cell.frame = CGRectMake(0, 0, 320, 45);
-    
-    
-    return cell;
-}
-
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
-{
-    return 1;
-}
-
-
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+    [self didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 

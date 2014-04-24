@@ -26,8 +26,7 @@
 
 - (void)viewDidLoad
 {
-    _user = [PFUser currentUser];
-        _savedTank = [PFObject objectWithClassName:@"SavedTanks"];
+
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -75,7 +74,7 @@
     
 
     
-    [_savedTank saveInBackgroundWithTarget:self selector:@selector(saveButton:)];
+//    [_savedTank saveInBackgroundWithTarget:self selector:@selector(saveButton:)];
 
     [sender resignFirstResponder];
 }

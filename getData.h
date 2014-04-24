@@ -16,17 +16,21 @@
 
 {
     @private
+
     PFQuery *savedTankQuery;
 }
 
-- (NSDictionary *)getSavedTankObjects;
-+ (getData *)getSavedTanks;
-+ (NSArray *)savedTankArray;
+//+ (void) getSavedTanks:(NSArray *)array completion:(void(^)(void))completion;
 
++ (void)getSavedTanks:(void (^)(NSArray *))completion;
+
+//- (NSDictionary *)getSavedTankObjects;
+
+@property (nonatomic, retain) PFObject  *testObject;
+@property (nonatomic, retain) NSArray *testObjects;
 @property (nonatomic, retain) NSArray *savedTankObjects;
-
-
 @property (nonatomic, retain) PFQuery *savedTankQuery;
+
 
 
 @end

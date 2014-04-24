@@ -14,75 +14,37 @@
 @implementation getData
 @synthesize savedTankQuery;
 @synthesize savedTankObjects;
+@synthesize testObject;
+@synthesize testObjects;
 
 static getData *_savedTankInstance = nil;
 static getData *_savedTankArray = nil;
 
-- (instancetype)init
++ (void)getSavedTanks:(void (^)(NSArray *))completion;
 {
-    self = [super init];
-    if (self) {
-        [getData init];
-    }
-    return self;
-}
-
-
-
-+ (getData *)getSavedTanks
-{
-    @synchronized(self)
-    
-    {
-        
     PFUser *userName = [PFUser currentUser];
     NSString *userNameString = [userName objectForKey:@"username"];
     
+
     
     PFQuery *query = [[PFQuery alloc] initWithClassName:@"SavedTanks"];
     [query whereKey:@"userName" equalTo:userNameString];
     [query setValue:@"SavedTanks" forKeyPath:@"parseClassName"];
-        
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
-             // The find succeeded.
-             NSLog(@"Successfully retrieved %lu Tanks.", objects.count);
-             // Do something with the found objects
-             for (PFObject *object in objects)
-             {
-                 
-                 
-                 NSString *tankNameString = [[NSString alloc] init];
-                 NSString *tankCapacityString = [[NSString alloc] init];
-                 
-                 tankNameString = [object valueForKey:@"tankName"];
-                 tankCapacityString = [object valueForKey:@"tankCapacity"];
-
-                 NSLog(@"%@", tankNameString);
-                 NSLog(@"%@", tankCapacityString);
-                 
-                 NSArray *_savedTankArray = [getData savedTankArray];
-                 
-                 _savedTankArray = [[NSArray alloc] initWithObjects:object, nil];
-                 
-                 NSLog(@"TANK NAME ARRAY: %@", [_savedTankArray objectAtIndex:0]);
-             }
-         }
-         else
-         {
-             // Log details of the failure
-             NSLog(@"Error: %@ %@", error, [error userInfo]);
-         }
-     }];
-    }
-    return _savedTankInstance;
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error)
+        {
+            NSLog(@"Houston we have no problem");
+            completion(objects);
+        }
+        else
+        {
+            NSLog(@"Houston, we have a problem.  I just watched Gravity at 2am.");
+            completion(nil);
+        }
+    }];
+    NSLog(@"YEAH BITCH!");
 }
 
-+ (NSArray *)savedTankArray
-{
-    return 0;
-}
 
 @end
