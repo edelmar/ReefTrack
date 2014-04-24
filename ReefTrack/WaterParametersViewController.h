@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  WaterParametersViewController.h
 //  ReefTrack
 //
 //  Created by Studio Symposium on 4/15/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface WaterParametersViewController : UIViewController
 
 @end

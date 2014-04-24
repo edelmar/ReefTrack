@@ -7,11 +7,25 @@
 //
 
 #import "AppDelegate.h"
+#import "SurveyViewController.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
++ (void)registerSubclass;
+{
+    
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [Parse setApplicationId:@"pj5UpUfFGFKr5FgV4N3qufEQVVdAmC21o2CDYnaH"
+                  clientKey:@"ijMgWkqlJ5LAa8JY2YYcm3bNeri5zF9K2d3BYtcC"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+ 
+
+
     // Override point for customization after application launch.
     return YES;
 }
