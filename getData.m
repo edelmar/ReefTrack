@@ -10,7 +10,6 @@
 #import "tankListViewController.h"
 #import <Parse/Parse.h>
 
-
 @implementation getData
 @synthesize savedTankQuery;
 @synthesize savedTankObjects;
@@ -22,6 +21,7 @@ static getData *_savedTankArray = nil;
 
 + (void)getSavedTanks:(void (^)(NSArray *))completion;
 {
+    
     PFUser *userName = [PFUser currentUser];
     NSString *userNameString = [userName objectForKey:@"username"];
     

@@ -30,11 +30,31 @@
                     <view key="view" contentMode="scaleToFill" id="84u-Td-o3o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOG THE FUCK BACK IN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fwt-8N-H2y">
+                                <rect key="frame" x="62" y="285" width="197" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jvN-0H-mfZ">
+                                <rect key="frame" x="119" y="381" width="82" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Okay, great!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButton:" destination="H1o-AM-6Zq" eventType="touchUpInside" id="xmC-9l-seX"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="xdd-pI-6lZ"/>
                     <connections>
-                        <segue destination="God-oS-U99" kind="push" identifier="loggedIn" id="q35-hA-GLz"/>
+                        <segue destination="God-oS-U99" kind="push" identifier="yesTanks" id="k5n-Tm-weI"/>
+                        <segue destination="mrp-SS-V9a" kind="push" identifier="noTanks" id="MOU-U0-L8f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XwH-je-p4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -82,36 +102,35 @@
                     </view>
                     <navigationItem key="navigationItem" id="KBJ-lE-lET"/>
                     <connections>
-                        <outlet property="tankList" destination="xw1-mW-EsQ" id="DjJ-MY-XUY"/>
-                        <segue destination="H1o-AM-6Zq" kind="push" identifier="logOut" id="Wz1-vl-bhp"/>
-                        <segue destination="mrp-SS-V9a" kind="push" identifier="newTankEntry" id="mZg-S9-5Uw"/>
+                        <outlet property="tankList" destination="xw1-mW-EsQ" id="M0B-a3-3ft"/>
+                        <segue destination="H1o-AM-6Zq" kind="push" identifier="logOut" id="fd4-aw-0UR"/>
+                        <segue destination="mrp-SS-V9a" kind="push" identifier="newTankEntry" id="wLu-Cj-jy7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="teS-oy-JvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-460" y="483"/>
+            <point key="canvasLocation" x="-332" y="-370"/>
         </scene>
         <!--Survey View Controller-->
         <scene sceneID="GJb-Y8-AcU">
             <objects>
                 <viewController storyboardIdentifier="SurveyView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mrp-SS-V9a" customClass="SurveyViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ubV-n3-QBg" customClass="UIScrollView">
+                    <view key="view" contentMode="scaleToFill" id="ubV-n3-QBg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tank Capacity" placeholder="Tank Capacity" minimumFontSize="17" id="IJO-za-lYe">
-                                <rect key="frame" x="20" y="184" width="220" height="20"/>
+                                <rect key="frame" x="20" y="214" width="220" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="0.74084097696245732" green="0.74084097696245732" blue="0.74084097696245732" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                 <connections>
                                     <action selector="textFieldReturn:" destination="mrp-SS-V9a" eventType="editingDidEndOnExit" id="SLC-OP-kxT"/>
-                                    <segue destination="God-oS-U99" kind="push" id="anG-5h-eXs"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Cl1-Q1-eHE">
-                                <rect key="frame" x="20" y="212" width="92" height="30"/>
+                                <rect key="frame" x="20" y="242" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Filtration">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +140,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zj2-GZ-aHC">
-                                <rect key="frame" x="20" y="318" width="88" height="30"/>
+                                <rect key="frame" x="20" y="348" width="88" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Lighting">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -131,7 +150,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Qmm-b0-EO9">
-                                <rect key="frame" x="20" y="421" width="117" height="30"/>
+                                <rect key="frame" x="20" y="451" width="117" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Water Movement">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,7 +160,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xJc-lu-tPi">
-                                <rect key="frame" x="20" y="518" width="34" height="30"/>
+                                <rect key="frame" x="266" y="209" width="34" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -151,7 +170,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tank Name" placeholder="Tank Name" minimumFontSize="17" id="0iQ-Lh-LcP">
-                                <rect key="frame" x="20" y="156" width="280" height="20"/>
+                                <rect key="frame" x="20" y="195" width="280" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -160,27 +179,23 @@
                                     <action selector="textFieldReturn:" destination="mrp-SS-V9a" eventType="editingDidEndOnExit" id="nYy-4n-t7O"/>
                                 </connections>
                             </textField>
-                            <imageView autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tankDummyShot.jpg" id="T41-uM-UOr">
-                                <rect key="frame" x="20" y="20" width="280" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="34" sectionHeaderHeight="1" sectionFooterHeight="1" id="C2i-Db-kFa">
-                                <rect key="frame" x="20" y="238" width="280" height="68"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="waY-vF-3e6">
+                                <rect key="frame" x="20" y="271" width="280" height="69"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="34" sectionHeaderHeight="1" sectionFooterHeight="22" id="X5X-k5-bWL">
-                                <rect key="frame" x="20" y="345" width="280" height="68"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lV4-JZ-5Ty">
+                                <rect key="frame" x="20" y="374" width="280" height="69"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="34" sectionHeaderHeight="1" sectionFooterHeight="1" id="cxD-7h-N2V">
-                                <rect key="frame" x="20" y="450" width="280" height="68"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9Kc-Vf-0pQ">
+                                <rect key="frame" x="20" y="479" width="280" height="69"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.62150703924914674" green="0.62150703924914674" blue="0.62150703924914674" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Oex-t7-496"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -188,10 +203,11 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="tankCapacity" destination="IJO-za-lYe" id="Tz5-PQ-3dV"/>
-                        <outlet property="tankFiltration" destination="C2i-Db-kFa" id="Shq-MB-aOC"/>
-                        <outlet property="tankLights" destination="X5X-k5-bWL" id="Fp1-Om-Ac5"/>
-                        <outlet property="tankMovement" destination="cxD-7h-N2V" id="Dh3-rN-u5c"/>
+                        <outlet property="tankFiltration" destination="waY-vF-3e6" id="X1x-Z0-fPg"/>
+                        <outlet property="tankLights" destination="lV4-JZ-5Ty" id="wut-0Y-MAC"/>
+                        <outlet property="tankMovement" destination="9Kc-Vf-0pQ" id="gfj-zj-sNd"/>
                         <outlet property="tankName" destination="0iQ-Lh-LcP" id="Zju-Vb-ZXt"/>
+                        <segue destination="God-oS-U99" kind="push" identifier="toTankList" id="iYi-oA-eh8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SXt-Zl-2Ep" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -201,7 +217,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-460" y="-228"/>
+            <point key="canvasLocation" x="-332" y="556"/>
         </scene>
         <!--Add Livestock View Controller-->
         <scene sceneID="5YC-VL-MTX">
@@ -244,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2L8-fb-mhL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-22" y="-228"/>
+            <point key="canvasLocation" x="1004" y="-1194"/>
         </scene>
         <!--Water Parameters View Controller-->
         <scene sceneID="XTT-Fa-LPW">
@@ -258,7 +274,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwM-Oe-1mJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125" y="-216"/>
+            <point key="canvasLocation" x="1417" y="-1194"/>
         </scene>
         <!--Tank View Controller-->
         <scene sceneID="QKR-7U-0lo">
@@ -272,19 +288,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qRG-Ab-omx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="576" y="-228"/>
+            <point key="canvasLocation" x="380" y="-1208"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="tankDummyShot.jpg" width="1146" height="848"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="anG-5h-eXs"/>
-        <segue reference="Wz1-vl-bhp"/>
+        <segue reference="wLu-Cj-jy7"/>
+        <segue reference="iYi-oA-eh8"/>
+        <segue reference="fd4-aw-0UR"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,7 +18,7 @@
 @property (nonatomic, strong) PFQuery *savedTanksQuery;
 @property (nonatomic, strong) PFQuery *tankNameQuery;
 @property (nonatomic, strong) PFQuery *tankCapacityQuery;
-
+@property (strong, nonatomic) NSArray *array;
 @property (nonatomic, strong) PFUser *user;
 
 @end

@@ -6,9 +6,14 @@
 //  Copyright (c) 2014 Studio Symposium. All rights reserved.
 //
 
+
+
 #import "initViewController.h"
 #import "SurveyViewController.h"
 #import <Parse/Parse.h>
+#import "getData.h"
+
+@class getData;
 
 @interface initViewController ()
 
@@ -27,48 +32,44 @@
 
 - (void)viewDidLoad
 {
-    
-    _savedTanksQuery = [PFQuery queryWithClassName:@"SavedTanks"];
-    
-    PFLogInViewController *loginView = [[PFLogInViewController alloc] init];
-    
-    loginView.delegate = self;
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     if ([PFUser currentUser])
     {
-        [self performSegueWithIdentifier:@"loggedIn" sender:self];
+        [self performSegueWithIdentifier:@"yesTanks" sender:self];
     }
-    else
-    {
-        PFLogInViewController *loginView = [[PFLogInViewController alloc] init];
-        loginView.delegate = self;
-        [self presentViewController:loginView animated:NO completion:nil];
-    }
-    
-
-    
+    [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-/* TODO List 4/16/14
- 
- - Create User Object
-    - Username
-    - ObjectID
-    - Tank List
- 
- - Create Tank Objects
- - Associate Tank Objects with User Objects.........
- 
-*/
+- (IBAction)loginButton:(id)sender
+{
+    PFLogInViewController *loginView = [[PFLogInViewController alloc] init];
+    loginView.delegate = self;
+    [self presentViewController:loginView animated:NO completion:nil];
+
+}
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
+    if ([PFUser currentUser])
+    {
+//        [self performSegueWithIdentifier:@"loggedIn" sender:self];
+        /*
+        [getData getSavedTanks:^(NSArray *results)
+         {
+             self.array = results;
+             
+             if (results != nil)
+             {
+                 [self performSegueWithIdentifier:@"yesTanks" sender:self];
+             }
+             else
+             {
+                 [self performSegueWithIdentifier:@"noTanks" sender:self];
+             }
+         }];
+         */
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self performSegueWithIdentifier:@"loggedIn" sender:self];
 
     NSLog(@"USERNAME: %@", [PFUser currentUser]);
 }
@@ -78,16 +79,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

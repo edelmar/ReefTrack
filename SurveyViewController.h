@@ -10,7 +10,7 @@
 #import <Mapkit/MapKit.h>
 #import <Parse/Parse.h>
 
-@interface SurveyViewController : UIViewController <UITextFieldDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SurveyViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, PFLogInViewControllerDelegate>
 {
 
 }
@@ -18,8 +18,8 @@
 
 // COMMON OBJECTS
 @property (strong, nonatomic) PFObject *savedTank;
-@property (strong, nonatomic) PFUser *user;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) PFUser *user;
 -(IBAction)textFieldReturn:(id)sender;
 
 
@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *tankLights;
 @property (strong, nonatomic) IBOutlet UITableView *tankFiltration;
 @property (strong, nonatomic) IBOutlet UITableView *tankMovement;
-
+@property (strong, nonatomic) NSMutableArray *tankLightsArray;
+@property (strong, nonatomic) NSMutableArray *tankFilterArray;
+@property (strong, nonatomic) NSMutableArray *tankMovementArray;
 
 @end

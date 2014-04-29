@@ -10,6 +10,8 @@
 #import <Parse/Parse.h>
 #import <Parse/PFObject+Subclass.h>
 #import "getData.h"
+#import "initViewController.h"
+#import "SurveyViewController.h"
 
 @interface tankListViewController ()
 
@@ -29,13 +31,10 @@
 
 - (void)viewDidLoad
 {
-//    NSArray *savedTankStuff = [getData savedTankArray];
-    
     UIImageView *bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
     [bannerImage setImage:[UIImage imageNamed:@"tankDummyShot.jpg"]];
     [bannerImage setContentMode:UIViewContentModeScaleAspectFill];
     
-//    self.tankList = [[UITableView alloc] initWithFrame:CGRectMake(0, 150, 320, 1000) style:UITableViewStylePlain];
     self.tankList.dataSource = self;
     self.tankList.delegate = self;
     self.title = @"My Tanks";
@@ -44,7 +43,6 @@
     [self.view addSubview:bannerImage];
 
     [self.view addSubview:self.tankList];
-
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -54,12 +52,24 @@
     [super viewDidAppear:animated];
     [getData getSavedTanks:^(NSArray *results) {
         self.array = results;
-        
-        NSLog(@"%@", results);
+        NSLog(@"TANK LIST SELECTOR DEBUG: %@", self.tankList);
         [self.tankList reloadData];
+        NSLog(@"%@", results);
     }];
 }
 
+-(void)setTankList:(id)val
+{
+    _tankList = val;
+    NSLog(@"%@", val);
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+//    [PFUser logOut];
+//    [self dismissViewControllerAnimated:YES completion: nil];
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,8 +85,6 @@
     }
     
     _tankList = [self.array objectAtIndex:indexPath.row];
-    
-//    [_lastImage setImage:[UIImage imageNamed:@"AussieTorch.jpg"]];
 
     cell.textLabel.text = [pfObject valueForKey:@"tankName"];
     cell.detailTextLabel.text = [pfObject valueForKey:@"tankCapacity"];
@@ -103,7 +111,11 @@
 
 - (IBAction)addNewTank:(id)sender
 {
-        [self performSegueWithIdentifier:@"newTankEntry" sender:self];
+
+    [self performSegueWithIdentifier:@"newTankEntry" sender:nil];
+    
+    
+//        [self performSegueWithIdentifier:@"newTankEntry" sender:self];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
