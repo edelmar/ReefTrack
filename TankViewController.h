@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TankViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+#import <AssetsLibrary/AssetsLibrary.h>
+
+@interface TankViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
     
 }
@@ -23,25 +25,26 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *tankNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *tankCapacityLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
 
 @property (nonatomic) NSString *passedValue;
 @property (strong, nonatomic) NSArray *array;
+@property (strong, nonatomic) NSMutableArray *assets;
 
 // BUTTONS
-@property (strong, nonatomic) IBOutlet UIButton *changeWaterButton;
-@property (strong, nonatomic) IBOutlet UIButton *changeFilterButton;
-@property (strong, nonatomic) IBOutlet UIButton *changeLightsButton;
-@property (strong, nonatomic) IBOutlet UIButton *changeMovementButton;
-@property (strong, nonatomic) IBOutlet UIButton *changeImageButton;
-
 
 @property (strong, nonatomic) NSMutableArray *tankLightsArray;
 @property (strong, nonatomic) NSMutableArray *tankFilterArray;
 @property (strong, nonatomic) NSMutableArray *tankMovementArray;
+@property (strong, nonatomic) NSMutableArray *tankImagesArray;
 @property (strong, nonatomic) IBOutlet UIAlertView *inputAlert;
 @property (copy) IBOutlet NSString *LightsString;
 @property (copy) IBOutlet NSString *FiltrationString;
 @property (copy) IBOutlet NSString *MovementString;
+
+// IMAGE COLLECTION VIEW
+
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 
 
 @end

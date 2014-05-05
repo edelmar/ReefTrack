@@ -69,20 +69,20 @@
         case 0:
             _FiltrationString = [alertView textFieldAtIndex:0].text;
             [_tankFilterArray addObject:_FiltrationString];
+            [_tankFiltration reloadData];
             NSLog(@"Number of Filtration Parts Added: %lu", (unsigned long)_tankFilterArray.count);
-            [self.tankFiltration reloadData];
             break;
         case 1:
             _LightsString = [alertView textFieldAtIndex:0].text;
             [_tankLightsArray addObject:_LightsString];
+            [_tankLights reloadData];
             NSLog(@"Number of Lights Added: %lu", (unsigned long)_tankLightsArray.count);
-            [self.tankLights reloadData];
             break;
         case 2:
             _MovementString = [alertView textFieldAtIndex:0].text;
             [_tankMovementArray addObject:_MovementString];
+            [_tankMovement reloadData];
             NSLog(@"Number of Water Movement Added: %lu", (unsigned long)_tankMovementArray.count);
-            [self.tankMovement reloadData];
             break;
         default:
             break;
@@ -141,6 +141,9 @@
             _tankMovement = [_tankMovementArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankMovementArray objectAtIndex:indexPath.row];
             break;
+        case 3:
+            [self performSelector:@selector(saveButton)];
+            break;
         default:
             break;
     }
@@ -197,7 +200,7 @@
     [sender resignFirstResponder];
 }
 
-- (IBAction)saveButton:(id)sender
+- (void)saveButton
 {
     _user = [PFUser currentUser];
     NSString *userNameString = [_user objectForKey:@"username"];

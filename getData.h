@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "tankListViewController.h"
+#import "MBProgressHUD.h"
 
 @class tankListViewController;
 
@@ -18,6 +19,7 @@
     @private
 
     PFQuery *savedTankQuery;
+    
 }
 
 //+ (void) getSavedTanks:(NSArray *)array completion:(void(^)(void))completion;

@@ -8,8 +8,10 @@
 
 #import "TankViewController.h"
 #import "tankListViewController.h"
+#import "photoHandler.h"
 #import <Parse/Parse.h>
 #import "getData.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @class getData;
 
@@ -46,8 +48,49 @@
     _tankMovement.dataSource = self;
     _tankMovement.delegate = self;
     
+    
+    _assets = [@[] mutableCopy];
+    __block NSMutableArray *tmpAssets = [@[] mutableCopy];
+    // 1 Grab our static instance of the ALAssetsLibrary
+    ALAssetsLibrary *assetsLibrary = [TankViewController defaultAssetsLibrary];
+    // 2 Enumerate through all of the ALAssets (photos) in the user’s Asset Groups (Folders)
+
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            if(result)
+            {
+                // 3 Enumerate each folder and add it’s ALAssets to the temporary array
+
+                [tmpAssets addObject:result];
+            }
+        }];
+        
+        // 4 Sort the assets list by date (this won’t work yet, but I will show you how to fix later). For now this code is commented out and the Assets will be sorted however they come out.
+
+        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+        //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
+        self.assets = tmpAssets;
+        
+        // 5 Reload the UICollectionView (this won’t work yet as we haven’t set up the delegate methods)
+
+        [self.collectionView reloadData];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error loading images %@", error);
+    }];
+    
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
++ (ALAssetsLibrary *)defaultAssetsLibrary
+{
+    static dispatch_once_t pred = 0;
+    static ALAssetsLibrary *library = nil;
+    dispatch_once(&pred, ^{
+        library = [[ALAssetsLibrary alloc] init];
+    });
+    return library;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -58,17 +101,87 @@
     
     NSString *tankCapString = [tankObject valueForKey:@"tankCapacity"];
     NSString *titleString = [tankObject valueForKey:@"tankName"];
+    NSDate *lastUpdatedDate = [tankObject valueForKey:@"updatedAt"];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"mm/dd/yy"];
+    
+    NSString *stringFromDate = [formatter stringFromDate:lastUpdatedDate];
+    
+    
     self.title = titleString;
     _tankNameLabel.text = titleString;
     _tankCapacityLabel.text = tankCapString;
+    _lastUpdatedLabel.text = stringFromDate;
     
+}
+
+- (IBAction)button:(UIButton *)sender
+{
+    switch (sender.tag)
+    {
+        case 0:
+            [self performSelector:@selector(photoHandler)];
+            NSLog(@"New Image Button Tapped");
+            break;
+        case 1:
+            NSLog(@"New Filtration Button Tapped");
+            break;
+        case 2:
+            NSLog(@"New Lights Button Tapped");
+            break;
+        case 3:
+            NSLog(@"New Water Movement Button Tapped");
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)photoHandler
+{
+    UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+    controller.allowsEditing = YES;
+    controller.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+/*    PFQuery *tankQuery = [PFQuery queryWithClassName:@"SavedTanks"];
+    PFObject *tankObject = [tankQuery getObjectWithId:_passedValue];
+    
+    _tankImagesArray = [tankObject objectForKey:@"tankImages"];*/
+    
+    return self.assets.count;
+}
+
+- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    photoHandler *cell = (photoHandler *)[collectionView dequeueReusableCellWithReuseIdentifier:@"photoCell" forIndexPath:indexPath];
+    
+    ALAsset *asset = self.assets[indexPath.row];
+    cell.asset = asset;
+    cell.backgroundColor = [UIColor clearColor];
+    collectionView.backgroundColor = [UIColor clearColor];
+    
+    return cell;
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10;
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
     static NSString *cellIdentifier = @"Cell";
-    NSString *cellModifier = @"- ";
     NSString *cellText = [[NSString alloc]init];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];

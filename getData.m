@@ -9,6 +9,7 @@
 #import "getData.h"
 #import "tankListViewController.h"
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @implementation getData
 @synthesize savedTankQuery;
@@ -21,11 +22,8 @@ static getData *_savedTankArray = nil;
 
 + (void)getSavedTanks:(void (^)(NSArray *))completion;
 {
-    
     PFUser *userName = [PFUser currentUser];
     NSString *userNameString = [userName objectForKey:@"username"];
-    
-
     
     PFQuery *query = [[PFQuery alloc] initWithClassName:@"SavedTanks"];
     [query whereKey:@"userName" equalTo:userNameString];

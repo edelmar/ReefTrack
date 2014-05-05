@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
-@interface initViewController : UIViewController <UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITextFieldDelegate>
+@interface initViewController : UIViewController <UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITextFieldDelegate, UIActivityItemSource>
 
 {
-    
+    MBProgressHUD *HUD;
 }
+
+
 
 @property (nonatomic, strong) PFQuery *savedTanksQuery;
 @property (nonatomic, strong) PFQuery *tankNameQuery;

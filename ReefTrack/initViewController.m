@@ -12,6 +12,9 @@
 #import "SurveyViewController.h"
 #import <Parse/Parse.h>
 #import "getData.h"
+#import "QuartzCore/QuartzCore.h"
+#import "MBProgressHUD.h"
+
 
 @class getData;
 
@@ -32,6 +35,8 @@
 
 - (void)viewDidLoad
 {
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    
     self.title = @"Reef Track";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -50,6 +55,7 @@
 
 - (IBAction)buttonPressed:(UIButton *)sender
 {
+        [self.view addSubview:HUD];
     PFSignUpViewController *signupView = [[PFSignUpViewController alloc] init];
     switch (sender.tag)
     {
@@ -67,15 +73,10 @@
                     }
                     else
                     {
-                        UIAlertView *loginFailAlert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Does it really matter why?" delegate:self cancelButtonTitle:@"Guess not" otherButtonTitles:nil, nil];
+                        UIAlertView *loginFailAlert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Invalid Login Credentials" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
                         [loginFailAlert show];
                     }
                 }];
-                /*
-                [PFUser logInWithUsername:loginString password:pwString];
-                NSLog(@"Current User: %@", [PFUser currentUser]);
-                
-                */
                 [self performSelector:@selector(logInViewController:didLogInUser:) withObject:nil];
             }
             else
@@ -88,11 +89,6 @@
         case 1:
         {
             [self presentViewController:signupView animated:YES completion:nil];
-            break;
-        }
-            case 2:
-        {
-            NSLog(@"USER DOESNT REMEMBER WHAT A JERK!");
             break;
         }
         default:
