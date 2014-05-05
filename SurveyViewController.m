@@ -11,12 +11,11 @@
 
 @interface SurveyViewController ()
 
+
 @end
 /**
  *  KNOWN BUGS
  *      Reload Data
- *      TableView Background
- *      ADD MORE THAN ONE ITEM TO ARRAY!!!!
  */
 @implementation SurveyViewController
 
@@ -31,10 +30,20 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"New Tank";
     
-    UIImageView *bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
-    [bannerImage setImage:[UIImage imageNamed:@"tankDummyShot.jpg"]];
-    [bannerImage setContentMode:UIViewContentModeScaleAspectFill];
+    [[UITableViewCell appearance] setBackgroundColor:[UIColor clearColor]];
+    [[UITableViewCell appearance] setIndentationLevel:-20.0f];
+
+    [[UITableView appearance] setBackgroundColor:[UIColor clearColor]];
+
+    _LightsString = [[NSString alloc] init];
+    _FiltrationString = [[NSString alloc] init];
+    _MovementString = [[NSString alloc] init];
+    
+    _tankLightsArray = [[NSMutableArray alloc]init];
+    _tankFilterArray = [[NSMutableArray alloc] init];
+    _tankMovementArray = [[NSMutableArray alloc] init];
     
     _tankFiltration.tag = 0;
     _tankFiltration.dataSource = self;
@@ -47,54 +56,61 @@
     _tankMovement.tag = 2;
     _tankMovement.dataSource = self;
     _tankMovement.delegate = self;
-    
-    [self.view addSubview:bannerImage];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    _tankLightsArray = [[NSMutableArray alloc] init];
-    _tankFilterArray = [[NSMutableArray alloc] init];
-    _tankMovementArray = [[NSMutableArray alloc] init];
-    
-    NSString *newLightsString = [[NSString alloc] init];
-    NSString *newFiltrationString = [[NSString alloc] init];
-    NSString *newMovementString = [[NSString alloc] init];
-    
-    NSString *titleString = [alertView buttonTitleAtIndex:buttonIndex];
     
     switch (alertView.tag)
     {
         case 0:
-            
-            if ([titleString isEqualToString:@"Add"])
-            {
-                newLightsString = [alertView textFieldAtIndex:0].text;
-                [_tankLightsArray addObject:newLightsString];
-                NSLog(@"I THINK IT WORKED! %lu", _tankLightsArray.count);
-            }
-            
-/*
-            NSLog(@"New Lighting Added: %@", newLightsString);
-            [_tankLightsArray addObject:newLightsString];
-            NSLog(@"Number of Lights Added: %lu", _tankLightsArray.count);
-            //            [_tankLights reloadData];*/
+            _FiltrationString = [alertView textFieldAtIndex:0].text;
+            [_tankFilterArray addObject:_FiltrationString];
+            NSLog(@"Number of Filtration Parts Added: %lu", (unsigned long)_tankFilterArray.count);
+            [self.tankFiltration reloadData];
             break;
         case 1:
-            newFiltrationString = [alertView textFieldAtIndex:0].text;
-            [_tankFilterArray addObject:newFiltrationString];
-            NSLog(@"Number of Filtration Parts Added: %lu", _tankFilterArray.count);
-            NSLog(@"New Filtration Added: %@", newFiltrationString);
-            //            [_tankFiltration reloadData];
+            _LightsString = [alertView textFieldAtIndex:0].text;
+            [_tankLightsArray addObject:_LightsString];
+            NSLog(@"Number of Lights Added: %lu", (unsigned long)_tankLightsArray.count);
+            [self.tankLights reloadData];
             break;
         case 2:
-            newMovementString = [alertView textFieldAtIndex:0].text;
-            [_tankMovementArray addObject:newMovementString];
-            NSLog(@"Number of Filtration Parts Added: %lu", _tankMovementArray.count);
-            NSLog(@"New Movement Added: %@", newMovementString);
-            //            [_tankMovement reloadData];
+            _MovementString = [alertView textFieldAtIndex:0].text;
+            [_tankMovementArray addObject:_MovementString];
+            NSLog(@"Number of Water Movement Added: %lu", (unsigned long)_tankMovementArray.count);
+            [self.tankMovement reloadData];
+            break;
+        default:
+            break;
+    }
+}
+
+
+- (void)addEquipment:(UIButton *)sender
+{
+    switch (sender.tag)
+    {
+        case 0:
+            _inputAlert = [[UIAlertView alloc] initWithTitle:@"Add Filtration Element" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+            _inputAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [_inputAlert show];
+            _inputAlert.tag = 0;
+            break;
+        case 1:
+            _inputAlert = [[UIAlertView alloc] initWithTitle:@"Add Lighting" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+            _inputAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [_inputAlert show];
+            _inputAlert.tag = 1;
+            break;
+        case 2:
+            _inputAlert = [[UIAlertView alloc] initWithTitle:@"Add Water Movement" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+            _inputAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [_inputAlert show];
+            _inputAlert.tag = 2;
         default:
             break;
     }
@@ -128,7 +144,8 @@
         default:
             break;
     }
-
+    cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    cell.textLabel.textColor = [UIColor whiteColor];
     return cell;
 }
 
@@ -150,9 +167,9 @@
         return _tankMovementArray.count;
     }
     
-    NSLog(@"Tank Movement Array Items: %lu", _tankMovementArray.count);
-    NSLog(@"Tank Lights Array Items: %lu", _tankLightsArray.count);
-    NSLog(@"Tank Filtration Array Items: %lu", _tankFilterArray.count);
+    NSLog(@"Tank Movement Array Items: %lu", (unsigned long)_tankMovementArray.count);
+    NSLog(@"Tank Lights Array Items: %lu", (unsigned long)_tankLightsArray.count);
+    NSLog(@"Tank Filtration Array Items: %lu", (unsigned long)_tankFilterArray.count);
     
     return _tankMovementArray.count;
     return _tankLightsArray.count;
@@ -164,44 +181,9 @@
     return self;
 }
 
-- (IBAction)addLightsButton:(id)sender
-{
-    UIAlertView *addLightsAlert = [[UIAlertView alloc] initWithTitle:@"Add Light Fixture" message:nil delegate:self cancelButtonTitle:@"Cancel"
-                                                   otherButtonTitles:@"Add", nil];
-    
-    addLightsAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    addLightsAlert.tag = 0;
-    
-    [addLightsAlert show];
-}
-
-- (IBAction)addFilterButton:(id)sender
-{
-    UIAlertView *addFilterAlert = [[UIAlertView alloc] initWithTitle:@"Add Filtration Element" message:nil delegate:self cancelButtonTitle:@"Cancel"
-                                                   otherButtonTitles:@"Add", nil];
-    
-    addFilterAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    addFilterAlert.tag = 1;
-    
-    [addFilterAlert show];
-}
-
-- (IBAction)addMovementButton:(id)sender
-{
-    UIAlertView *addMovementAlert = [[UIAlertView alloc] initWithTitle:@"Add Water Movement" message:nil delegate:self cancelButtonTitle:@"Cancel"
-                                                     otherButtonTitles:@"Add", nil];
-    
-    addMovementAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    addMovementAlert.tag = 2;
-    
-    [addMovementAlert show];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     NSLog(@"USERNAME: %@", [PFUser currentUser]);
-    
-
 }
 
 - (IBAction)textFieldReturn:(id)sender
@@ -212,23 +194,11 @@
     NSLog(@"SAVING TANK NAME AS: %@", _tankName.text);
     NSLog(@"SAVING TANK CAPACITY AS: %@", _tankCapacity.text);
 
-        [sender resignFirstResponder];
-}
-
-
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-
+    [sender resignFirstResponder];
 }
 
 - (IBAction)saveButton:(id)sender
 {
-    /**
-     *  LEAVE THIS ALONE
-     */
-    
     _user = [PFUser currentUser];
     NSString *userNameString = [_user objectForKey:@"username"];
     _savedTank = [PFObject objectWithClassName:@"SavedTanks"];
@@ -242,10 +212,7 @@
     [_savedTank save];
     [self performSegueWithIdentifier:@"toTankList" sender:nil];
     NSLog(@"OBJECT ID: %@", [_savedTank objectId]);
-    
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {

@@ -21,4 +21,11 @@
 @property (strong, nonatomic) NSArray *array;
 @property (nonatomic, strong) PFUser *user;
 
+@property (nonatomic, strong) IBOutlet UITextField *loginField;
+@property (nonatomic, strong) IBOutlet UITextField *passwordField;
+
+@property (nonatomic, retain) IBOutlet UIButton *button;
+
+
+
 @end

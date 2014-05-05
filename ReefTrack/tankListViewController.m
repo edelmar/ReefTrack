@@ -12,36 +12,31 @@
 #import "getData.h"
 #import "initViewController.h"
 #import "SurveyViewController.h"
+#import "TankViewController.h"
 
 @interface tankListViewController ()
-
 @end
-
 @implementation tankListViewController
-
-
-
 @class getData;
-
-/*+ (NSString *)parseClassName
-{
-    return @"SavedTanks";
-}*/
-
 
 - (void)viewDidLoad
 {
-    UIImageView *bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
-    [bannerImage setImage:[UIImage imageNamed:@"tankDummyShot.jpg"]];
-    [bannerImage setContentMode:UIViewContentModeScaleAspectFill];
+    
+    [[UITableViewCell appearance] setBackgroundColor:[UIColor clearColor]];
+
+    [[UITableView appearance] setBackgroundColor:[UIColor clearColor]];
+    
+    [getData getSavedTanks:^(NSArray *results) {
+        self.array = results;
+        NSLog(@"TANK LIST SELECTOR DEBUG: %@", self.tankList);
+        [self.tankList reloadData];
+        NSLog(@"%@", results);
+    }];
     
     self.tankList.dataSource = self;
     self.tankList.delegate = self;
     self.title = @"My Tanks";
-
     
-    [self.view addSubview:bannerImage];
-
     [self.view addSubview:self.tankList];
     
     [super viewDidLoad];
@@ -50,27 +45,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [getData getSavedTanks:^(NSArray *results) {
-        self.array = results;
-        NSLog(@"TANK LIST SELECTOR DEBUG: %@", self.tankList);
-        [self.tankList reloadData];
-        NSLog(@"%@", results);
-    }];
-}
 
--(void)setTankList:(id)val
-{
-    _tankList = val;
-    NSLog(@"%@", val);
-    
 }
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-//    [PFUser logOut];
-//    [self dismissViewControllerAnimated:YES completion: nil];
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -84,11 +60,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
+    
     _tankList = [self.array objectAtIndex:indexPath.row];
-
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    
     cell.textLabel.text = [pfObject valueForKey:@"tankName"];
     cell.detailTextLabel.text = [pfObject valueForKey:@"tankCapacity"];
-    cell.imageView.image = [UIImage imageNamed:@"AussieTorch.jpg"];
+//    cell.imageView.image = [UIImage imageNamed:@"AussieTorch.jpg"];
     
     return cell;
 }
@@ -96,26 +77,23 @@
 // do the normal table view stuff
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"COUNT ROWS IN SECTION: %lu", self.array.count);
     return self.array.count;
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    //Tank Name
-    //Tank Capacity
-    //Tank Image (maybe!)
-
-    return self;
 }
 
 - (IBAction)addNewTank:(id)sender
 {
-
     [self performSegueWithIdentifier:@"newTankEntry" sender:nil];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    NSInteger *row = [indexPath row];
     
-    
-//        [self performSegueWithIdentifier:@"newTankEntry" sender:self];
+    NSArray *array = [_array objectAtIndex:indexPath.row];
+    NSString *objectId = [array valueForKey:@"objectId"];
+    NSLog(@"Row Tapped: %@", objectId);
+    [self performSegueWithIdentifier:@"selectTank" sender:objectId];
+    // WHEN A CELL IS SELECTED GO HERE!
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -128,15 +106,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([segue.identifier isEqualToString:@"selectTank"])
+    {
+        TankViewController *controller = (TankViewController *)segue.destinationViewController;
+        
+        controller.passedValue = sender;
+        
+        NSLog(@"PASSED VALUE: %@", controller.passedValue);
+    }
+    
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

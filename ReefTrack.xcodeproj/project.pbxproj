@@ -34,6 +34,10 @@
 		281A39C718FDD8E60099279C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 281A39BE18FDD8E60099279C /* SystemConfiguration.framework */; };
 		2829E56C18FDE5CA008273F6 /* SurveyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2829E56B18FDE5CA008273F6 /* SurveyViewController.m */; };
 		2829E57018FDE65A008273F6 /* TankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2829E56F18FDE65A008273F6 /* TankViewController.m */; };
+		2836F14519108DA9005011E3 /* shrimpShot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2836F14419108DA9005011E3 /* shrimpShot.jpg */; };
+		2836F1471910900A005011E3 /* clownShot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2836F1461910900A005011E3 /* clownShot.jpg */; };
+		2836F149191099BB005011E3 /* zoaShot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2836F148191099BB005011E3 /* zoaShot.jpg */; };
+		2836F14B1911B2EF005011E3 /* hermitShot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2836F14A1911B2EF005011E3 /* hermitShot.jpg */; };
 		286AC7BB18FE00B900D53681 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286AC7BA18FE00B900D53681 /* Social.framework */; };
 		286AC7BC18FE00CA00D53681 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2829E56618FDE3A5008273F6 /* Twitter.framework */; };
 		286AC7BE18FE02CD00D53681 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286AC7BD18FE02CD00D53681 /* FacebookSDK.framework */; };
@@ -92,6 +96,10 @@
 		2829E56B18FDE5CA008273F6 /* SurveyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyViewController.m; sourceTree = "<group>"; };
 		2829E56E18FDE65A008273F6 /* TankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TankViewController.h; sourceTree = "<group>"; };
 		2829E56F18FDE65A008273F6 /* TankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TankViewController.m; sourceTree = "<group>"; };
+		2836F14419108DA9005011E3 /* shrimpShot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shrimpShot.jpg; sourceTree = "<group>"; };
+		2836F1461910900A005011E3 /* clownShot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = clownShot.jpg; sourceTree = "<group>"; };
+		2836F148191099BB005011E3 /* zoaShot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = zoaShot.jpg; sourceTree = "<group>"; };
+		2836F14A1911B2EF005011E3 /* hermitShot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hermitShot.jpg; sourceTree = "<group>"; };
 		286AC7BA18FE00B900D53681 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		286AC7BD18FE02CD00D53681 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		286AC7C218FE485500D53681 /* initViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = initViewController.h; sourceTree = "<group>"; };
@@ -213,6 +221,10 @@
 		281A398618FDD8560099279C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2836F14A1911B2EF005011E3 /* hermitShot.jpg */,
+				2836F148191099BB005011E3 /* zoaShot.jpg */,
+				2836F1461910900A005011E3 /* clownShot.jpg */,
+				2836F14419108DA9005011E3 /* shrimpShot.jpg */,
 				28CE050418FE5CD400843D3C /* tankDummyShot.jpg */,
 				28BEF55818FDED4C0036DD2B /* AussieTorch.jpg */,
 				281A398718FDD8560099279C /* ReefTrack-Info.plist */,
@@ -328,8 +340,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2836F1471910900A005011E3 /* clownShot.jpg in Resources */,
+				2836F14519108DA9005011E3 /* shrimpShot.jpg in Resources */,
 				28CE050518FE5CD400843D3C /* tankDummyShot.jpg in Resources */,
+				2836F14B1911B2EF005011E3 /* hermitShot.jpg in Resources */,
 				28BEF55918FDED4C0036DD2B /* AussieTorch.jpg in Resources */,
+				2836F149191099BB005011E3 /* zoaShot.jpg in Resources */,
 				281A399818FDD8560099279C /* Images.xcassets in Resources */,
 				281A398A18FDD8560099279C /* InfoPlist.strings in Resources */,
 				281A399318FDD8560099279C /* Main.storyboard in Resources */,

@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) PFUser *user;
 -(IBAction)textFieldReturn:(id)sender;
+-(IBAction)addEquipment:(id)sender;
 
 
 // VIEW SPECIFIC OBJECTS
@@ -33,5 +34,10 @@
 @property (strong, nonatomic) NSMutableArray *tankLightsArray;
 @property (strong, nonatomic) NSMutableArray *tankFilterArray;
 @property (strong, nonatomic) NSMutableArray *tankMovementArray;
+@property (strong, nonatomic) IBOutlet UIAlertView *inputAlert;
+@property (copy) IBOutlet NSString *LightsString;
+@property (copy) IBOutlet NSString *FiltrationString;
+@property (copy) IBOutlet NSString *MovementString;
+
 
 @end
