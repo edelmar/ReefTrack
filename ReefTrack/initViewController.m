@@ -32,37 +32,51 @@
 
 - (void)viewDidLoad
 {
-    if ([PFUser currentUser])
-    {
-        [self performSegueWithIdentifier:@"yesTanks" sender:self];
-    }
     self.title = @"Reef Track";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-/*- (IBAction)loginButton:(id)sender
+- (void)viewDidAppear:(BOOL)animated
 {
-    PFLogInViewController *loginView = [[PFLogInViewController alloc] init];
-    loginView.delegate = self;
-    
-    loginView.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hermitShot.jpg"]];
-    
-    [self presentViewController:loginView animated:NO completion:nil];
+    [PFUser logOut];
+    NSLog(@"User Logout Test: %@", [PFUser currentUser]);
+}
 
-}*/
+- (IBAction)dismissKeyboard:(id)sender
+{
+    [self resignFirstResponder];
+}
 
-- (IBAction)buttonPressed:(id)sender
+- (IBAction)buttonPressed:(UIButton *)sender
 {
     PFSignUpViewController *signupView = [[PFSignUpViewController alloc] init];
-    switch (_button.tag)
+    switch (sender.tag)
     {
         case 0:
+        {
             if (_passwordField.text != nil && _loginField.text != nil)
             {
-                NSLog(@"USERNAME ENTERED? %@", _loginField.text);
-                NSLog(@"PASSWORD ENTERED? %@", _passwordField.text);
-                         [PFUser logInWithUsername:_loginField.text password:_passwordField.text];
+                NSString *loginString = _loginField.text;
+                NSString *pwString = _passwordField.text;
+                
+                [PFUser logInWithUsernameInBackground:loginString password:pwString block:^(PFUser *user, NSError *error) {
+                    if (user)
+                    {
+                        [self performSelector:@selector(logInViewController:didLogInUser:) withObject:nil];
+                    }
+                    else
+                    {
+                        UIAlertView *loginFailAlert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Does it really matter why?" delegate:self cancelButtonTitle:@"Guess not" otherButtonTitles:nil, nil];
+                        [loginFailAlert show];
+                    }
+                }];
+                /*
+                [PFUser logInWithUsername:loginString password:pwString];
+                NSLog(@"Current User: %@", [PFUser currentUser]);
+                
+                */
+                [self performSelector:@selector(logInViewController:didLogInUser:) withObject:nil];
             }
             else
             {
@@ -70,16 +84,27 @@
                 [fillInAlert show];
             }
             break;
+        }
         case 1:
+        {
             [self presentViewController:signupView animated:YES completion:nil];
             break;
+        }
             case 2:
+        {
             NSLog(@"USER DOESNT REMEMBER WHAT A JERK!");
             break;
+        }
         default:
             break;
     }
 }
+
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error
+{
+
+}
+
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
