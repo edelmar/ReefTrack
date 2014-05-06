@@ -28,7 +28,7 @@
             <objects>
                 <viewController id="H1o-AM-6Zq" customClass="initViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="84u-Td-o3o" customClass="UIScrollView">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="Ryp-ym-YgN">
@@ -95,8 +95,15 @@
                                             <action selector="dismissKeyboard:" destination="H1o-AM-6Zq" eventType="editingDidEndOnExit" id="sEt-xk-vO6"/>
                                         </connections>
                                     </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reef Track" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EMY-v0-AZq">
+                                        <rect key="frame" x="6" y="128" width="308" height="79"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="70"/>
+                                        <color key="textColor" red="0.47650795554130232" green="0.70502405747671881" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -123,15 +130,15 @@
             <objects>
                 <viewController id="God-oS-U99" customClass="tankListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="03b-Wf-50N">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shrimpShot.jpg" id="4Ni-wY-AyA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xw1-mW-EsQ">
-                                <rect key="frame" x="0.0" y="130" width="320" height="670"/>
+                                <rect key="frame" x="0.0" y="130" width="320" height="438"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -185,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clownShot.jpg" id="tcb-9p-KVt">
-                                <rect key="frame" x="0.0" y="0.0" width="431" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tank Capacity" placeholder="Tank Capacity" minimumFontSize="17" id="IJO-za-lYe">
@@ -562,6 +569,7 @@
                     <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="collectionView" destination="RCs-pd-Nfs" id="pM0-GS-p5S"/>
+                        <outlet property="focusedImage" destination="cR1-1W-NaT" id="anC-Ua-bjW"/>
                         <outlet property="lastUpdatedLabel" destination="syb-Ad-j1E" id="jTi-c4-7u5"/>
                         <outlet property="tankCapacityLabel" destination="kBZ-Ef-DAA" id="t15-vu-48b"/>
                         <outlet property="tankFiltration" destination="xG0-6P-aa0" id="29A-Ju-Tku"/>
@@ -588,8 +596,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="p7K-sr-nFL"/>
-        <segue reference="fd4-aw-0UR"/>
         <segue reference="MOU-U0-L8f"/>
+        <segue reference="fd4-aw-0UR"/>
+        <segue reference="k5n-Tm-weI"/>
     </inferredMetricsTieBreakers>
 </document>

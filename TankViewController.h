@@ -10,7 +10,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface TankViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface TankViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 {
     
 }
@@ -26,6 +26,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *tankNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *tankCapacityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
+
+@property (strong, nonatomic) IBOutlet UIImageView *focusedImage;
 
 @property (nonatomic) NSString *passedValue;
 @property (strong, nonatomic) NSArray *array;

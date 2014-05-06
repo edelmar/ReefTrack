@@ -148,11 +148,6 @@
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-/*    PFQuery *tankQuery = [PFQuery queryWithClassName:@"SavedTanks"];
-    PFObject *tankObject = [tankQuery getObjectWithId:_passedValue];
-    
-    _tankImagesArray = [tankObject objectForKey:@"tankImages"];*/
-    
     return self.assets.count;
 }
 
@@ -166,6 +161,16 @@
     collectionView.backgroundColor = [UIColor clearColor];
     
     return cell;
+}
+
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ALAsset *asset = self.assets[indexPath.row];
+    ALAssetRepresentation *defaultRep = [asset defaultRepresentation];
+    
+    UIImage *focusedImage = [UIImage imageWithCGImage:[defaultRep fullResolutionImage] scale:[defaultRep scale] orientation:1];
+
+    _focusedImage.image = focusedImage;
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
