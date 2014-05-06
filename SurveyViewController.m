@@ -34,7 +34,6 @@
     
     [[UITableViewCell appearance] setBackgroundColor:[UIColor clearColor]];
     [[UITableViewCell appearance] setIndentationLevel:-20.0f];
-
     [[UITableView appearance] setBackgroundColor:[UIColor clearColor]];
 
     _LightsString = [[NSString alloc] init];
@@ -52,7 +51,7 @@
     _tankLights.tag = 1;
     _tankLights.dataSource = self;
     _tankLights.delegate = self;
-    
+
     _tankMovement.tag = 2;
     _tankMovement.dataSource = self;
     _tankMovement.delegate = self;
@@ -67,21 +66,18 @@
     switch (alertView.tag)
     {
         case 0:
-            _FiltrationString = [alertView textFieldAtIndex:0].text;
+            _FiltrationString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
             [_tankFilterArray addObject:_FiltrationString];
-            [_tankFiltration reloadData];
             NSLog(@"Number of Filtration Parts Added: %lu", (unsigned long)_tankFilterArray.count);
             break;
         case 1:
-            _LightsString = [alertView textFieldAtIndex:0].text;
+            _LightsString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
             [_tankLightsArray addObject:_LightsString];
-            [_tankLights reloadData];
             NSLog(@"Number of Lights Added: %lu", (unsigned long)_tankLightsArray.count);
             break;
         case 2:
-            _MovementString = [alertView textFieldAtIndex:0].text;
+            _MovementString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
             [_tankMovementArray addObject:_MovementString];
-            [_tankMovement reloadData];
             NSLog(@"Number of Water Movement Added: %lu", (unsigned long)_tankMovementArray.count);
             break;
         default:
@@ -89,6 +85,12 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [_tankFiltration reloadData];
+    [_tankLights reloadData];
+    [_tankMovement reloadData];
+}
 
 - (void)addEquipment:(UIButton *)sender
 {
@@ -130,15 +132,12 @@
     switch (tableView.tag)
     {
         case 0:
-            _tankFiltration = [_tankFilterArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankFilterArray objectAtIndex:indexPath.row];
             break;
         case 1:
-            _tankLights = [_tankLightsArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankLightsArray objectAtIndex:indexPath.row];
             break;
         case 2:
-            _tankMovement = [_tankMovementArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankMovementArray objectAtIndex:indexPath.row];
             break;
         case 3:
@@ -154,26 +153,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView.tag == 0)
+    switch (tableView.tag)
     {
-        // MAKE FILTRATION TAG HERE
-        return _tankFilterArray.count;
+        case 0:
+            return _tankFilterArray.count;
+            break;
+        case 1:
+            return _tankLightsArray.count;
+            break;
+        case 2:
+            return _tankMovementArray.count;
+            break;
+        default:
+            break;
     }
-    if (tableView.tag == 1)
-    {
-        // MAKE LIGHTS TAG HERE
-        return _tankLightsArray.count;
-    }
-    if (tableView.tag == 2)
-    {
-        // MAKE MOVEMENT TAG HERE
-        return _tankMovementArray.count;
-    }
-    
-    NSLog(@"Tank Movement Array Items: %lu", (unsigned long)_tankMovementArray.count);
-    NSLog(@"Tank Lights Array Items: %lu", (unsigned long)_tankLightsArray.count);
-    NSLog(@"Tank Filtration Array Items: %lu", (unsigned long)_tankFilterArray.count);
-    
     return _tankMovementArray.count;
     return _tankLightsArray.count;
     return _tankFilterArray.count;

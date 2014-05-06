@@ -40,4 +40,6 @@
 @property (copy) IBOutlet NSString *MovementString;
 
 
+@property (nonatomic, weak) UITableView *tableView;
+
 @end
