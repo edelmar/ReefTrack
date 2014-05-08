@@ -36,6 +36,8 @@
     
     [[UITableView appearance] setBackgroundColor:[UIColor clearColor]];
     
+    _tankImagesArray = [[NSMutableArray alloc] init];
+    
     _tankFiltration.tag = 0;
     _tankFiltration.dataSource = self;
     _tankFiltration.delegate = self;
@@ -47,7 +49,6 @@
     _tankMovement.tag = 2;
     _tankMovement.dataSource = self;
     _tankMovement.delegate = self;
-    
     
     _assets = [@[] mutableCopy];
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
@@ -133,6 +134,9 @@
         case 3:
             NSLog(@"New Water Movement Button Tapped");
             break;
+        case 4:
+            NSLog(@"User wants to save new images");
+            break;
         default:
             break;
     }
@@ -144,18 +148,45 @@
     controller.allowsEditing = YES;
     controller.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:controller animated:YES completion:nil];
+    controller.delegate = self;
 }
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    _takenImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self dismissViewControllerAnimated:YES completion:^
+    {
+        // Add object to array: Working
+        [_tankImagesArray addObject:_takenImage];
+        NSLog(@"Number of images taken: %lu", (unsigned long)_tankImagesArray.count);
+        
+        // Convert array to NSData Object
+        NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:_tankImagesArray];
+        
+        // Convert NSData Object to PFFile
+        PFFile *imageFile = [PFFile fileWithData:imageData];
+        
+        PFQuery *tankQuery = [PFQuery queryWithClassName:@"SavedTanks"];
+        _tankObject = [tankQuery getObjectWithId:_passedValue];
+        
+        [_tankObject setObject:imageFile forKey:@"tankImages"];
+        
+        [_tankObject save];
+    }];
+}
+
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.assets.count;
+    NSLog(@"Number of items in section: %lu", (unsigned long) _tankImagesArray.count);
+    return _tankImagesArray.count;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     photoHandler *cell = (photoHandler *)[collectionView dequeueReusableCellWithReuseIdentifier:@"photoCell" forIndexPath:indexPath];
     
-    ALAsset *asset = self.assets[indexPath.row];
+    ALAsset *asset = _tankImagesArray[indexPath.row];
     cell.asset = asset;
     cell.backgroundColor = [UIColor clearColor];
     collectionView.backgroundColor = [UIColor clearColor];
@@ -165,7 +196,7 @@
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = self.assets[indexPath.row];
+    ALAsset *asset = self.tankImagesArray[indexPath.row];
     ALAssetRepresentation *defaultRep = [asset defaultRepresentation];
     
     UIImage *focusedImage = [UIImage imageWithCGImage:[defaultRep fullResolutionImage] scale:[defaultRep scale] orientation:1];

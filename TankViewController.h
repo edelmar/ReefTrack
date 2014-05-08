@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface TankViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
+@interface TankViewController : UIViewController <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 {
-    
+    MBProgressHUD *HUD;
 }
+
+@property (strong, nonatomic) PFObject *savedTank;
 
 // VIEWS AND CELLS
 @property (strong, nonatomic) IBOutlet UIImageView *tankImages;
@@ -28,6 +32,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
 
 @property (strong, nonatomic) IBOutlet UIImageView *focusedImage;
+@property (strong, nonatomic) IBOutlet UIImage *takenImage;
+@property (strong, nonatomic) IBOutlet UIImagePickerController *pickerController;
 
 @property (nonatomic) NSString *passedValue;
 @property (strong, nonatomic) NSArray *array;
@@ -44,9 +50,11 @@
 @property (copy) IBOutlet NSString *FiltrationString;
 @property (copy) IBOutlet NSString *MovementString;
 
-// IMAGE COLLECTION VIEW
+// IMAGE COLLECTION STUFF
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+
+@property (nonatomic, strong) PFObject *tankObject;
 
 
 @end
