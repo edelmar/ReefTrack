@@ -104,7 +104,7 @@
     NSDate *lastUpdatedDate = [tankObject valueForKey:@"updatedAt"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"mm/dd/yy"];
+    [formatter setDateFormat:@"MM dd yyyy"];
     
     NSString *stringFromDate = [formatter stringFromDate:lastUpdatedDate];
     
@@ -199,16 +199,12 @@
     switch (tableView.tag)
     {
         case 0:
-            _tankFiltration = [_tankFilterArray objectAtIndex:indexPath.row];
             cellText = [_tankFilterArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = cellText;
             break;
         case 1:
-            _tankLights = [_tankLightsArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankLightsArray objectAtIndex:indexPath.row];
             break;
         case 2:
-            _tankMovement = [_tankMovementArray objectAtIndex:indexPath.row];
             cell.textLabel.text = [_tankMovementArray objectAtIndex:indexPath.row];
             break;
         default:
@@ -230,17 +226,14 @@
     
     if (tableView.tag == 0)
     {
-        // MAKE FILTRATION TAG HERE
         return _tankFilterArray.count;
     }
     if (tableView.tag == 1)
     {
-        // MAKE LIGHTS TAG HERE
         return _tankLightsArray.count;
     }
     if (tableView.tag == 2)
     {
-        // MAKE MOVEMENT TAG HERE
         return _tankMovementArray.count;
     }
     

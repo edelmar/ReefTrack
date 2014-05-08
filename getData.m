@@ -10,6 +10,7 @@
 #import "tankListViewController.h"
 #import <Parse/Parse.h>
 #import "MBProgressHUD.h"
+#import "MBProgressHUD.h"
 
 @implementation getData
 @synthesize savedTankQuery;
@@ -43,6 +44,5 @@ static getData *_savedTankArray = nil;
     }];
     NSLog(@"YEAH BITCH!");
 }
-
 
 @end

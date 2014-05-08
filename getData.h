@@ -21,12 +21,7 @@
     PFQuery *savedTankQuery;
     
 }
-
-//+ (void) getSavedTanks:(NSArray *)array completion:(void(^)(void))completion;
-
 + (void)getSavedTanks:(void (^)(NSArray *))completion;
-
-//- (NSDictionary *)getSavedTankObjects;
 
 @property (nonatomic, retain) PFObject  *testObject;
 @property (nonatomic, retain) NSArray *testObjects;

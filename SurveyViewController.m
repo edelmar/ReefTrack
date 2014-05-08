@@ -62,27 +62,41 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
-    switch (alertView.tag)
+    if (buttonIndex != [alertView cancelButtonIndex])
     {
-        case 0:
-            _FiltrationString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
-            [_tankFilterArray addObject:_FiltrationString];
-            NSLog(@"Number of Filtration Parts Added: %lu", (unsigned long)_tankFilterArray.count);
-            break;
-        case 1:
-            _LightsString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
-            [_tankLightsArray addObject:_LightsString];
-            NSLog(@"Number of Lights Added: %lu", (unsigned long)_tankLightsArray.count);
-            break;
-        case 2:
-            _MovementString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
-            [_tankMovementArray addObject:_MovementString];
-            NSLog(@"Number of Water Movement Added: %lu", (unsigned long)_tankMovementArray.count);
-            break;
-        default:
-            break;
+        switch (alertView.tag)
+        {
+                
+                
+            case 0:
+                _FiltrationString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
+                [_tankFilterArray addObject:_FiltrationString];
+                NSLog(@"Number of Filtration Parts Added: %lu", (unsigned long)_tankFilterArray.count);
+                break;
+            case 1:
+                _LightsString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
+                [_tankLightsArray addObject:_LightsString];
+                NSLog(@"Number of Lights Added: %lu", (unsigned long)_tankLightsArray.count);
+                break;
+            case 2:
+                _MovementString =  [NSString stringWithFormat:@"%@",[alertView textFieldAtIndex:0].text];
+                [_tankMovementArray addObject:_MovementString];
+                NSLog(@"Number of Water Movement Added: %lu", (unsigned long)_tankMovementArray.count);
+                break;
+            default:
+                break;
+        }
+        
     }
+    else
+    {
+        NSLog(@"No item added");
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    return [[alertView textFieldAtIndex:0].text length] > 0;
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -35,17 +35,39 @@
 
 - (void)viewDidLoad
 {
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    
     self.title = @"Reef Track";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    _loginField.text = nil;
+    _passwordField.text = nil;
     [PFUser logOut];
     NSLog(@"User Logout Test: %@", [PFUser currentUser]);
+}
+
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    [self.view setFrame:CGRectMake(0, 0, 320, 800)];
+    [UIView animateWithDuration:0.25 animations:^
+    {
+        [self.view setFrame:CGRectMake(0,-200,320,800)];
+    }];
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    [self.view setFrame:CGRectMake(0, -200, 320, 800)];
+    
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         [self.view setFrame:CGRectMake(0,0,320,460)];
+     }];
 }
 
 - (IBAction)dismissKeyboard:(id)sender
@@ -55,7 +77,6 @@
 
 - (IBAction)buttonPressed:(UIButton *)sender
 {
-        [self.view addSubview:HUD];
     PFSignUpViewController *signupView = [[PFSignUpViewController alloc] init];
     switch (sender.tag)
     {
@@ -63,6 +84,7 @@
         {
             if (_passwordField.text != nil && _loginField.text != nil)
             {
+                
                 NSString *loginString = _loginField.text;
                 NSString *pwString = _passwordField.text;
                 
