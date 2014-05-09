@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>158B055D-D27D-497B-A1CB-F5783B3F0232</string>
+	<string>F916372E-FDEF-44B3-9E4E-1C6CDCCF6F2C</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ReefTrack</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -19,7 +19,7 @@
 	<dict>
 		<key>44E06FFF-D212-4B1A-98E3-CAEBF05B55D9</key>
 		<string>../..</string>
-		<key>89091666-09F2-4C8D-AC47-B66986CA85A8</key>
+		<key>8955483F-B44C-449F-AB30-40FB7C10AD74</key>
 		<string>../../ReefTrack</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -42,7 +42,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>89091666-09F2-4C8D-AC47-B66986CA85A8</string>
+			<string>8955483F-B44C-449F-AB30-40FB7C10AD74</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ReefTrack</string>
 		</dict>
