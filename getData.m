@@ -30,6 +30,7 @@ static getData *_savedTankArray = nil;
     [query whereKey:@"userName" equalTo:userNameString];
     [query setValue:@"SavedTanks" forKeyPath:@"parseClassName"];
     
+    // Download information arrays (tank stats, etc)
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {

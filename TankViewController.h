@@ -15,6 +15,10 @@
 @interface TankViewController : UIViewController <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 {
     MBProgressHUD *HUD;
+    
+    NSArray *imagesFilesArray;
+    
+    NSMutableArray *imagesArray;
 }
 
 @property (strong, nonatomic) PFObject *savedTank;
@@ -52,7 +56,7 @@
 
 // IMAGE COLLECTION STUFF
 
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) IBOutlet UICollectionView *imagesCollection;
 
 @property (nonatomic, strong) PFObject *tankObject;
 

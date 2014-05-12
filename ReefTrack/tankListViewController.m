@@ -28,9 +28,7 @@
     
     [getData getSavedTanks:^(NSArray *results) {
         self.array = results;
-        NSLog(@"TANK LIST SELECTOR DEBUG: %@", self.tankList);
         [self.tankList reloadData];
-        NSLog(@"%@", results);
     }];
     
     self.tankList.dataSource = self;

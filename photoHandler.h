@@ -11,6 +11,10 @@
 
 @interface photoHandler : UICollectionViewCell
 
-@property (nonatomic, strong) ALAsset *asset;
+{
+    
+}
+
+@property (weak, nonatomic) IBOutlet UIImageView *parseImage;
 
 @end

@@ -21,6 +21,7 @@
 
 @implementation TankViewController
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,8 +34,12 @@
 - (void)viewDidLoad
 {
     [[UITableViewCell appearance] setBackgroundColor:[UIColor clearColor]];
-    
+    [[UICollectionView appearance] setBackgroundColor:[UIColor clearColor]];
     [[UITableView appearance] setBackgroundColor:[UIColor clearColor]];
+    
+    _imagesCollection.dataSource = self;
+    _imagesCollection.delegate = self;
+    
     
     _tankImagesArray = [[NSMutableArray alloc] init];
     
@@ -50,48 +55,9 @@
     _tankMovement.dataSource = self;
     _tankMovement.delegate = self;
     
-    _assets = [@[] mutableCopy];
-    __block NSMutableArray *tmpAssets = [@[] mutableCopy];
-    // 1 Grab our static instance of the ALAssetsLibrary
-    ALAssetsLibrary *assetsLibrary = [TankViewController defaultAssetsLibrary];
-    // 2 Enumerate through all of the ALAssets (photos) in the user’s Asset Groups (Folders)
-
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if(result)
-            {
-                // 3 Enumerate each folder and add it’s ALAssets to the temporary array
-
-                [tmpAssets addObject:result];
-            }
-        }];
-        
-        // 4 Sort the assets list by date (this won’t work yet, but I will show you how to fix later). For now this code is commented out and the Assets will be sorted however they come out.
-
-        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
-        //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
-        self.assets = tmpAssets;
-        
-        // 5 Reload the UICollectionView (this won’t work yet as we haven’t set up the delegate methods)
-
-        [self.collectionView reloadData];
-    } failureBlock:^(NSError *error) {
-        NSLog(@"Error loading images %@", error);
-    }];
-    
-    
+    [self queryParseMethod];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-+ (ALAssetsLibrary *)defaultAssetsLibrary
-{
-    static dispatch_once_t pred = 0;
-    static ALAssetsLibrary *library = nil;
-    dispatch_once(&pred, ^{
-        library = [[ALAssetsLibrary alloc] init];
-    });
-    return library;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -105,7 +71,7 @@
     NSDate *lastUpdatedDate = [tankObject valueForKey:@"updatedAt"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM dd yyyy"];
+    [formatter setDateFormat:@"MM/dd/yyyy"];
     
     NSString *stringFromDate = [formatter stringFromDate:lastUpdatedDate];
     
@@ -142,6 +108,35 @@
     }
 }
 
+- (void)queryParseMethod
+{
+    PFQuery *tankQuery = [PFQuery queryWithClassName:@"SavedTanks"];
+    [tankQuery whereKey:@"objectId" equalTo:_passedValue];
+    
+    [tankQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        if (!error)
+        {
+            for (PFObject *object in objects)
+            {
+                PFFile *imageFile = [object valueForKey:@"tankImages"];
+                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error)
+                    {
+                        imagesFilesArray = [[NSArray alloc] initWithObjects:imageFile, nil];
+                        NSLog(@"NO ERROR HERE: %@", imagesFilesArray);
+                    }
+                    else
+                    {
+                        NSLog(@"THERE WAS AN ERROR: %@", error);
+                    }
+                    [_imagesCollection reloadData];
+                }];
+            }
+        }
+    }];
+}
+
 - (void)photoHandler
 {
     UIImagePickerController *controller = [[UIImagePickerController alloc] init];
@@ -158,7 +153,6 @@
     {
         // Add object to array: Working
         [_tankImagesArray addObject:_takenImage];
-        NSLog(@"Number of images taken: %lu", (unsigned long)_tankImagesArray.count);
         
         // Convert array to NSData Object
         NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:_tankImagesArray];
@@ -176,32 +170,66 @@
 }
 
 
-- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    NSLog(@"Number of items in section: %lu", (unsigned long) _tankImagesArray.count);
-    return _tankImagesArray.count;
-}
 
-- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    photoHandler *cell = (photoHandler *)[collectionView dequeueReusableCellWithReuseIdentifier:@"photoCell" forIndexPath:indexPath];
+
+    static NSString *cellIdentifier = @"photoHandler";
+        [collectionView registerClass:[photoHandler class] forCellWithReuseIdentifier:@"photoHandler"];
+    photoHandler *cell = (photoHandler *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    ALAsset *asset = _tankImagesArray[indexPath.row];
-    cell.asset = asset;
-    cell.backgroundColor = [UIColor clearColor];
-    collectionView.backgroundColor = [UIColor clearColor];
+    PFFile *imageObject = [imagesFilesArray objectAtIndex:indexPath.row];
+    
+    
+    [imageObject getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error)
+        {
+            cell.parseImage.image = [UIImage imageWithData:data];
+            NSLog(@"CELL DIAGNOSTIC 1: %@", cell.parseImage.image);
+            NSLog(@"CELL DIAGNOSTIC 2: %@", cell.parseImage);
+        }
+    }];
+    
+/* TRYING COPY PASTA ABOVE
+    static NSString *cellIdentifier = @"Cell";
+    [collectionView registerClass:[photoHandler class] forCellWithReuseIdentifier:cellIdentifier];
+    photoHandler *cell = (photoHandler *) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    PFObject *imageObject = [imagesFilesArray objectAtIndex:indexPath.row];
+
+    
+    PFFile *imageFile = [imageObject objectForKey:@"imageFile"];
+    
+    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    {
+        if (!error)
+        {
+                 cell.parseImage.image = [UIImage imageWithData:data];
+        }
+        else
+        {
+            NSLog(@"Sumthin's messed up here: %@", error);
+        }
+    }];*/
     
     return cell;
 }
 
+- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSLog(@"Number of items in section: %lu", (unsigned long) imagesFilesArray.count);
+    return [imagesFilesArray count];
+}
+
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = self.tankImagesArray[indexPath.row];
-    ALAssetRepresentation *defaultRep = [asset defaultRepresentation];
     
-    UIImage *focusedImage = [UIImage imageWithCGImage:[defaultRep fullResolutionImage] scale:[defaultRep scale] orientation:1];
-
-    _focusedImage.image = focusedImage;
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section

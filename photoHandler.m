@@ -7,19 +7,24 @@
 //
 
 #import "photoHandler.h"
+#import "TankViewController.h"
 
 @interface photoHandler ()
-
-@property (nonatomic, weak) IBOutlet UIImageView *photoImageView;
 
 @end
 
 @implementation photoHandler
 
-- (void) setAsset:(ALAsset *)asset
+@synthesize parseImage;
+
+- (id)initWithFrame:(CGRect)frame
 {
-    _asset = asset;
-    self.photoImageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        // init code
+    }
+    return self;
 }
 
 /*

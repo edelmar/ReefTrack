@@ -495,7 +495,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="2AA-X5-bcW" customClass="photoHandler">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="2AA-X5-bcW" customClass="photoHandler">
                                                 <rect key="frame" x="0.0" y="0.0" width="83" height="53"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -510,7 +510,7 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="kTc-tn-9gp">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="parseImage" id="kTc-tn-9gp">
                                                             <rect key="frame" x="3" y="3" width="76" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </imageView>
@@ -518,14 +518,10 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <size key="customSize" width="83" height="53"/>
-                                                <connections>
-                                                    <outlet property="photoImageView" destination="kTc-tn-9gp" id="ymy-fm-Syi"/>
-                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                         <connections>
-                                            <outlet property="dataSource" destination="BQa-mV-96D" id="RaA-Z5-zFZ"/>
-                                            <outlet property="delegate" destination="BQa-mV-96D" id="ud0-gP-DID"/>
+                                            <outlet property="delegate" destination="BQa-mV-96D" id="hTD-bH-NL2"/>
                                         </connections>
                                     </collectionView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qDm-lt-Tty">
@@ -580,8 +576,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="800"/>
                     <connections>
-                        <outlet property="collectionView" destination="RCs-pd-Nfs" id="pM0-GS-p5S"/>
                         <outlet property="focusedImage" destination="cR1-1W-NaT" id="anC-Ua-bjW"/>
+                        <outlet property="imagesCollection" destination="RCs-pd-Nfs" id="Sb4-4n-Wl2"/>
                         <outlet property="lastUpdatedLabel" destination="syb-Ad-j1E" id="jTi-c4-7u5"/>
                         <outlet property="tankCapacityLabel" destination="kBZ-Ef-DAA" id="t15-vu-48b"/>
                         <outlet property="tankFiltration" destination="xG0-6P-aa0" id="29A-Ju-Tku"/>
@@ -608,8 +604,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MOU-U0-L8f"/>
         <segue reference="fd4-aw-0UR"/>
         <segue reference="p7K-sr-nFL"/>
+        <segue reference="MOU-U0-L8f"/>
     </inferredMetricsTieBreakers>
 </document>
