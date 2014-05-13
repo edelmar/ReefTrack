@@ -176,7 +176,6 @@
 {
 
     static NSString *cellIdentifier = @"photoHandler";
-        [collectionView registerClass:[photoHandler class] forCellWithReuseIdentifier:@"photoHandler"];
     photoHandler *cell = (photoHandler *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     PFFile *imageObject = [imagesFilesArray objectAtIndex:indexPath.row];
